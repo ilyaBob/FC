@@ -1,0 +1,21 @@
+{
+    "manifest_version": 2,
+    "name": "fatum",
+    "version": "3.0",
+    "description": "Запускает проверку на слетевшие скрипты в услугах, статьях и т.д.",
+    "icons": {
+        "128": "128.png"
+    },
+
+    "browser_action": {
+        "default_title": "FCH",
+        "default_popup": "index.html"
+      },
+
+    "content_scripts": [
+        {
+            "matches": [ "<all_urls>" ],
+            "js": [ "app.js" ]
+        }
+    ]
+ }
