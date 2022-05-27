@@ -19,8 +19,26 @@
 }
 .main{
     padding: 10px;
-    overflow: scroll;
     height: 430px;
+}
+.clearProgressBar{
+    width: inherit;
+    height: 25px;
+    border-radius: 50px;
+    border: 1px solid black;
+    overflow: hidden;
+    position: relative;
+}
+.progressBar{
+    width: 0;
+    height: 25px;
+    background-color: #058fd3;
+}
+.progressStatus{
+    position: absolute;
+    transform:translate(-50%,-50%);
+    left: 50%;
+    top: 50%;
 }
 h2{
     margin:10px 0;

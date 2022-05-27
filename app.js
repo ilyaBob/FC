@@ -17,6 +17,9 @@ document.querySelector('button').onclick = function(){
     ]
 
 let count = 0;
+let progress = 0;
+let progerssStat = 0;
+let vallArr = 0;
 service.innerHTML = "";
 
 
@@ -28,6 +31,8 @@ service.innerHTML = "";
             let services = docParse.querySelectorAll(`.${elementList.class} > a`);
 
             let arrServ = Array.from(services).map(el => 'https://fontan.city/' + el.href.split("/").slice(el.href.split("/").indexOf(elementList.chapter)).join('/'));
+
+            vallArr += arrServ.length;
             
             
             // Проверка испранвости скрипта на страничке
@@ -43,8 +48,15 @@ service.innerHTML = "";
                         service.innerHTML += `${++count}) <a href=${el}><span id = "url_name">${h1Services.textContent}</span></a></br>`;
                         console.log(sc);
                     }
+                    progerssStat ++;
+                    progress += 100 / vallArr;
+                    document.querySelector(".progressBar").style.width = `${progress}%`;
+                    document.querySelector(".progressStatus").innerHTML = `${progerssStat}/ ${vallArr}`;
+                 
                 })
             })
         })
-    )
+        
+    ) 
+
 }
