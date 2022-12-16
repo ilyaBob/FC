@@ -9,11 +9,9 @@
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
 }
-
-.header {}
 
 .header__inner-header {
     display: flex;
@@ -21,14 +19,13 @@
     align-items: center;
 }
 
-.header__logo {}
-
 .header__btn {
     background: var(--accent);
     border: 0;
     padding: 10px 17px;
     color: white;
     border-radius: 5px;
+    margin-right: 30px;
 }
 
 .header__btn:hover {
@@ -61,4 +58,5 @@
 .main__info-img{
     display: block;
     margin: 0 auto;
+    width: 100%;
 }
