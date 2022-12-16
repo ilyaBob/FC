@@ -1,75 +1,64 @@
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-.container{
-    width: 650px;
-    height: 500px;
-    border: 1px solid black;
-    border-radius: 20px;
+.wrapper {
+    width: 100vw;
+    height: 100%;
     overflow: hidden;
-    background: none;
 }
-.header{
-    position: relative;
-    height: 70px;
-    padding: 10px;
-    border-bottom: 1px solid #000;
+
+:root {
+    --accent: #058fd3;
 }
-.main{
-    padding: 10px;
-    height: 430px;
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
 }
-.clearProgressBar{
-    width: inherit;
-    height: 25px;
-    border-radius: 50px;
-    border: 1px solid black;
-    overflow: hidden;
-    position: relative;
+
+.header {}
+
+.header__inner-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-.progressBar{
-    width: 0;
-    height: 25px;
-    background-color: #058fd3;
-}
-.progressStatus{
-    position: absolute;
-    transform:translate(-50%,-50%);
-    left: 50%;
-    top: 50%;
-}
-h2{
-    margin:10px 0;
-}
-button{
-    position: absolute;
-    top: 50%;
-    right: 15px;
-    transform: translateY(-50%);
-    width: 130px;
-    height: 50px;
-    font-size: 16px;
-    border-radius: 50px;
-    background-color: #058fd3;
+
+.header__logo {}
+
+.header__btn {
+    background: var(--accent);
+    border: 0;
+    padding: 10px 17px;
     color: white;
-    font-weight: 600;
+    border-radius: 5px;
+}
+
+.header__btn:hover {
     opacity: .9;
 }
-button:hover{
-    opacity: 1;
-    position: absolute;
-    top: 50%;
-    right: 15px;
-    transform: translateY(-50%);
+
+.header__btn:active {
+    transform: scale(.95);
 }
-button:active{
-    position: absolute;
-    top: 50%;
-    right: 15px;
-    transform: translateY(-50%) scale(.95);
+.table{
+    max-width: 1200px;
 }
-#url_name{
-    font-weight: 600;
+.thead{
+    font-size: 20px;
+}
+.td__number{
+    text-align: center;
+}
+.tr{
+    line-height: 25px;
+    background: rgb(227, 227, 227);
+}
+.td{
+    padding: 5px 10px;
+}
+.main__info-text{
+    font-size: 20px;
+    text-align: center;
+}
+.main__info-img{
+    display: block;
+    margin: 0 auto;
 }

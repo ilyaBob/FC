@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,21 +8,29 @@
     <link rel="stylesheet" href="style.css">
     <title>FC парсер Скриптов</title>
 </head>
+
 <body>
-    <div class="container">
+    <div class="wrapper">
         <header class="header">
-            <img src="logo.svg" alt="">
-            <button>Запустить</button>
-        </header>
-        <section class="main">
-            <div class="clearProgressBar">
-                <div class="progressBar"></div>
-                <span class="progressStatus"> 0 / 0</span>
+            <div class="container">
+                <div class="header__inner-header">
+                    <img class="header__logo" src="logo.svg" alt="">
+                    <button class="header__btn">Запустить</button>
+                </div>
             </div>
-            <h2>Услуги</h2>
-            <p class="servis">Ссылки там где слетел скрипт</p>
-        </section>    
+        </header>
+        <main class="main">
+            <div class="container">
+                <div class="main__inner-main">
+                    <div class="main__info-box">
+                        <p class="main__info-text">После запуска найдёт все слетевшие скрипты такого вида: </p>
+                        <img class="main__info-img" src="./script.jpg" alt="script">
+                    </div>
+                    <table class="table"></table>
+                </div>
+            </div>
+        </main>
     </div>
     <script src="app.js"></script>
+
 </html>
-<a href=""></a>

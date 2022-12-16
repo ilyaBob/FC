@@ -1,62 +1,74 @@
-let service = document.querySelector(".servis");
-console.log("консоль работает");
-
-document.querySelector('button').onclick = function(){
-
-    let list_url = [
-        {url:"https://fontan.city/services/",chapter:"services", class:"sect"},
-        {url:"https://fontan.city/tipovye-resheniya/",chapter:"tipovye-resheniya", class:"sect"},
-        {url:"https://fontan.city/advice/?PAGEN_1=1",chapter:"advice", class:"inner-item  > .title"},
-        {url:"https://fontan.city/advice/?PAGEN_1=2",chapter:"advice", class:"inner-item  > .title"},
-        {url:"https://fontan.city/advice/?PAGEN_1=3",chapter:"advice", class:"inner-item  > .title"},
-        {url:"https://fontan.city/advice/?PAGEN_1=4",chapter:"advice", class:"inner-item  > .title"},
-        {url:"https://fontan.city/advice/?PAGEN_1=5",chapter:"advice", class:"inner-item  > .title"},
-        {url:"https://fontan.city/advice/?PAGEN_1=6",chapter:"advice", class:"inner-item  > .title"},
-        {url:"https://fontan.city/advice/?PAGEN_1=7",chapter:"advice", class:"inner-item  > .title"},
-        {url:"https://fontan.city/advice/?PAGEN_1=8",chapter:"advice", class:"inner-item  > .title"},
-    ]
-
+let headerBtn = document.querySelector('.header__btn');
+let findResult = document.querySelector('.table');
+let infoBox = document.querySelector('.main__info-box');
 let count = 0;
-let progress = 0;
-let progerssStat = 0;
-let vallArr = 0;
-service.innerHTML = "";
 
+const objToCheck = [
+   { url: "https://fontan.city/services/", classBox: '.sect > a' },
+   { url: "https://fontan.city/tipovye-resheniya/", classBox: '.sect > a' },
+   { url: "https://fontan.city/advice/", classBox: '.inner-item > .title > a' },
+]
 
-    // Перебераем массив ссылок
-    list_url.map(elementList => fetch(elementList.url).then(response =>response.text()).then(html => {
-            let parser = new DOMParser();                                       // Парсим полученынй документ из строки в HTML
-            let docParse = parser.parseFromString(html, 'text/html');
+headerBtn.addEventListener('click', startChecking)
 
-            let services = docParse.querySelectorAll(`.${elementList.class} > a`);
+// Получение страниц
+function startChecking(){
+   infoBox.style.display = 'none';
+   findResult.innerHTML = '<thead class="thead"><th class="th">№</th><th class="th">Название</th><th class="th">Ссылка</th></thead>';
 
-            let arrServ = Array.from(services).map(el => 'https://fontan.city/' + el.href.split("/").slice(el.href.split("/").indexOf(elementList.chapter)).join('/'));
-
-            vallArr += arrServ.length;
-            
-            
-            // Проверка испранвости скрипта на страничке
-            arrServ.map(el=>{
-
-                fetch(el).then(response => response.text()).then(html => {
-                    let parser = new DOMParser();
-                    let docParse = parser.parseFromString(html, 'text/html');
-
-                    let sc = docParse.querySelector('sc');
-                    if(sc) {
-                        let h1Services = docParse.querySelector('#pagetitle');
-                        service.innerHTML += `${++count}) <a href=${el}><span id = "url_name">${h1Services.textContent}</span></a></br>`;
-                        console.log(sc);
-                    }
-                    progerssStat ++;
-                    progress += 100 / vallArr;
-                    document.querySelector(".progressBar").style.width = `${progress}%`;
-                    document.querySelector(".progressStatus").innerHTML = `${progerssStat}/ ${vallArr}`;
-                 
-                })
+   for (const item of objToCheck) {
+      if (item.url == "https://fontan.city/advice/") {
+   
+         fetch(item.url)
+            .then(response => response.text())
+            .then(html => {
+               let parser = new DOMParser();
+               let docParse = parser.parseFromString(html, 'text/html')
+               let countPages = docParse.querySelectorAll('.pagination > li > a');
+               return countPages[countPages.length - 2].textContent;
             })
-        })
-        
-    ) 
+            .then(countPages => {
+               console.log(countPages);
+               for (let i = 1; i <= countPages; i++) {
+                  parse(`https://fontan.city/advice/?PAGEN_1=${i}`, '.inner-item > .title > a')
+               }
+            })
+      }
+      else {
+         parse(item.url, item.classBox)
+      }
+   }
+}
 
+function parse(url, classBoxUrlOnPage) {
+   fetch(url)
+      .then(response => response.text())
+      .then(html => {
+         let parser = new DOMParser();
+         let docParse = parser.parseFromString(html, 'text/html');
+
+         let parseUrl = docParse.querySelectorAll(classBoxUrlOnPage);
+         for (const item of parseUrl) {
+            const contentUrl = `https://fontan.city${item.getAttribute('href')}`
+            fetch(contentUrl)
+               .then(response => response.text())
+               .then(html => {
+                  let parserUrl = new DOMParser();
+                  let docParseUrl = parserUrl.parseFromString(html, 'text/html');
+
+                  let erScript = docParseUrl.querySelector('sc');
+                  if (erScript) {
+                     let title = docParseUrl.querySelector('h1').textContent;
+                     count++;
+                     findResult.innerHTML += `<tr class="tr">
+                                                <td class="td td__number">${count}</td>
+                                                <td class="td">${title}</td>
+                                                <td class="td"> <a target="_blank" href="${contentUrl}">${contentUrl}</a></td>
+                                             </tr>`;
+                  } else {
+                     console.log("Поломка не найдена: " + contentUrl);
+                  }
+               })
+         }
+      })
 }
